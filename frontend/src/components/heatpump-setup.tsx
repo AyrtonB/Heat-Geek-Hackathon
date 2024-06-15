@@ -1,35 +1,34 @@
 // This file is used to setup configure the heatpump
 
-import { Card, Form, Slider, SliderSingleProps } from "antd";
+import { Card, Form, Slider } from "antd";
 import React from "react";
 import { useAppDispatch } from "../state/dispatch";
 import { propertySlice } from "../state/property";
+import { useSelector } from "react-redux";
+import { RootState } from "../state";
 
-const MAX_FLOW_TEMPERATURE = 55;
-const MIN_FLOW_TEMPERATURE = 35;
+const MIN_SCOP = 1;
+const MCS_STANDARD = 2.8;
+const MAX_SCOP = 5;
 
-const marks: SliderSingleProps["marks"] = {
-  35: "35°C",
-  40: "40°C",
-  45: "45°C",
-  50: "50°C",
-  55: "55°C",
-};
 const MaxFlowTemperature: React.FC = () => {
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.property.maxFlowTemperature
+  );
   return (
-    <Form.Item label="Max flow temperature">
-    <Slider 
-      step={5}
-      marks={marks}
-      min={MIN_FLOW_TEMPERATURE}
-      max={MAX_FLOW_TEMPERATURE}
-      defaultValue={MAX_FLOW_TEMPERATURE}
-      onChange={(value) => {
-        dispatch(propertySlice.actions.setMaxFlowTemperature(value))
-      }}
-    />
-  </Form.Item>
+    <Form.Item label={`SCoP ${value}`}>
+      <Slider
+        min={MIN_SCOP}
+        max={MAX_SCOP}
+        step={0.1}
+        value={value}
+        defaultValue={MCS_STANDARD}
+        onChange={(value) => {
+          dispatch(propertySlice.actions.setMaxFlowTemperature(value));
+        }}
+      />
+    </Form.Item>
   );
 };
 
