@@ -12,6 +12,14 @@
 
 <br>
 
+### Docker
+
+* `docker build -t heatmap:latest .`
+* `docker run -d -p 8000:8000 --name heatmap heatmap:latest`
+
+
+<br>
+
 ### Open Qs
 
 * Point-in-time v historical/long-term
