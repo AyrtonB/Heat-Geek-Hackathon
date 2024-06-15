@@ -4,6 +4,7 @@ from sqlmodel import Field, SQLModel
 
 class PointInTimeRecord(SQLModel):
     start_time: datetime.datetime
+    end_time: datetime.datetime
     value: float
 
 class PowerCarbonIntensity(PointInTimeRecord, table=True):
