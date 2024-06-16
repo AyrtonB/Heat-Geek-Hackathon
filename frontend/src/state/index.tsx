@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { heatpumpSlice } from './property'
+import { heatpumpSlice } from './heatpump'
 import { apiSlice } from './api'
 import { addressSearchSlice } from './address-search'
 import { useSelector } from 'react-redux'

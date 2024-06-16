@@ -2,25 +2,27 @@
 
 import React from "react";
 import { useAppDispatch } from "../state/dispatch";
-import { Button, Card, Input, Space } from "antd";
+import { Button, Card, Form, Input, Space } from "antd";
 import { RootState } from "../state";
 import { useSelector } from "react-redux";
 import { addressSearchSlice } from "../state/address-search";
-import { heatpumpSlice } from "../state/property";
-import { useLazyGetPropertyInfoQuery } from "../state/api";
+import { heatpumpSlice } from "../state/heatpump";
+import { useLazyGetHeatGeekAddressLookupQuery } from "../state/api";
 import CurrentProperty from "./current-property";
 
 const PostcodeSearch: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) => r.addressSearch.postcode);
   return (
-    <Input
+   <Form.Item label='Postcode'>
+     <Input
       placeholder="Postcode"
       onChange={(e) =>
         dispatch(addressSearchSlice.actions.setPostcode(e.target.value))
       }
       value={value}
     />
+    </Form.Item>
   );
 };
 
@@ -28,6 +30,7 @@ const AddressLine1Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) => r.addressSearch.address);
   return (
+    <Form.Item label='Address'>
     <Input
       value={value}
       placeholder="Address"
@@ -35,12 +38,13 @@ const AddressLine1Search: React.FC = () => {
         dispatch(addressSearchSlice.actions.setAddress(e.target.value))
       }
     />
+    </Form.Item>
   );
 };
 
 const SearchButton: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [query, result] = useLazyGetPropertyInfoQuery();
+  const [query, result] = useLazyGetHeatGeekAddressLookupQuery();
   const params = useSelector((r: RootState) => r.addressSearch);
   return (
     <>
@@ -55,7 +59,7 @@ const SearchButton: React.FC = () => {
 
             if (!data) return;
 
-            dispatch(heatpumpSlice.actions.setPropertyInfo(data))
+            dispatch(heatpumpSlice.actions.setAddressLookup(data))
           } catch (e) {
             console.error(e);
           }

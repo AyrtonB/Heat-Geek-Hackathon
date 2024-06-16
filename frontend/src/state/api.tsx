@@ -3,14 +3,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { get } from 'http'
 
 
-const BASE_URL = 'https://hackathonapis-35klfnb33a-ew.a.run.app'
+const BASE_URL = 'http://localhost:8000'
 
-export interface PropertyInfoSearchParams {
+export interface HeatgeekAddressSearchParams {
     postcode: string
     address: string
 }
 
-export type PropertyInfoResult = {
+export type HeatgeekAddressLookupResult = {
     zor_model: string;
     home: {
       uprn: number;
@@ -250,28 +250,30 @@ export type PropertyInfoResult = {
 }
 
 export interface AnnualSavingsParameters {
-  scop: number[]
-  heat_loss_kw?: number;
-  location_design_temp?: number;
+  scops: number[]
+  annual_heat_kwh_consumption?: number;
 }
 
 type AnnualSavingsResponse = {
-  key: string;
-  value: number;
-}[][]
+  annual: {
+    key: string;
+    value: string;
+  }[]
+}[]
 
   
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: builder => ({
-        getPropertyInfo: builder.query<PropertyInfoResult, PropertyInfoSearchParams>({
+        getHeatGeekAddressLookup: builder.query<HeatgeekAddressLookupResult, HeatgeekAddressSearchParams>({
             query: ({ postcode, address }) => `/analysis/heat-geek-address-lookup?address=${address}&postcode=${postcode}`
         }),
-        getAnnualSavings: builder.query<AnnualSavingsResponse, AnnualSavingsParameters>({
-            query: (p) => `annual_savings/?scop=${p.scop}`
+        ///analysis/opex-estimate?annual_heat_kwh_consumption=123
+        getOpexEstimate: builder.query<AnnualSavingsResponse, AnnualSavingsParameters>({
+            query: (p) => `/analysis/opex-estimate/?scops=${p.scops}&annual_heat_kwh_consumption=${p.annual_heat_kwh_consumption}`
         })
     })
 })
 
-export const { useLazyGetPropertyInfoQuery, useGetAnnualSavingsQuery } = apiSlice
+export const { useLazyGetHeatGeekAddressLookupQuery, useGetOpexEstimateQuery } = apiSlice
