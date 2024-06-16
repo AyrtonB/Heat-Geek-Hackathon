@@ -4,10 +4,8 @@ import { AnnualSavingsParameters, useGetOpexEstimateQuery } from "../state/api";
 import { useSelector } from "react-redux";
 import { RootState } from "../state";
 import {
-  MAX_SCOP,
   MAX_SCOP_INDEX,
-  MIN_SCOP,
-  SCOP_INTERVAL,
+
   SCOP_VALUES,
 } from "../constants";
 import { useAppDispatch } from "../state/dispatch";
@@ -46,7 +44,7 @@ const ScopSlider: React.FC = () => {
         style={{ width: "100%" }}
         value={scopIndex}
         tooltip={{
-          formatter: (value) => SCOP_VALUES[scopIndex].toFixed(2),
+          formatter: () => SCOP_VALUES[scopIndex].toFixed(2),
         }}
         step={1}
         // marks={{ [MIN_SCOP]: MIN_SCOP, [MAX_SCOP]: MAX_SCOP }}
@@ -64,7 +62,7 @@ const useScopIndex = () =>
 const OpexEstimateResultsList: React.FC = () => {
   const params = useQueryParams();
   const scopIndex = useScopIndex();
-  const { data, error, isLoading } = useGetOpexEstimateQuery(params);
+  const { data, isLoading } = useGetOpexEstimateQuery(params);
   return (
     <>
       {isLoading && <Spin />}
