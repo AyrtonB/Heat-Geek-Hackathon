@@ -1,0 +1,10 @@
+data/heatmap.db
+__pycache__/
+poetry.lock
+heatmap.tar.gz
+
+frontend/build
+frontend/node_modules
+data/Uk TEMPERATURE MEANS.csv
+*.pyc
+
