@@ -5,3 +5,4 @@ heatmap.tar.gz
 
 frontend/build
 frontend/node_modules
+*.pyc
