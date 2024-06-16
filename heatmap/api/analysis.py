@@ -2,6 +2,8 @@ import requests
 from fastapi import APIRouter
 
 from heatmap.definitions.analysis import KeyValue, OpexEstimate
+from heatmap.analysis import load_temperature_s, get_opex_estimate_ts_df
+
 
 router = APIRouter(tags=["Analysis"])
 
@@ -13,14 +15,48 @@ def get_heat_geek_address_details(address: str, postcode: str) -> dict:
 
 
 @router.get("/opex-estimate")
-def get_opex_estimate(annual_heat_kwh_consumption: float, scops: str) -> list[OpexEstimate]:
-    scops = [float(scop) for scop in scops.split(",")]
-    return [
-        OpexEstimate(
+def get_opex_estimate(
+    min_scops: str = '3.5',
+    annual_heat_kwh_consumption: float = 12000, 
+    heating_on_temperature = 17.0,
+    min_temp: float = -5,
+    max_temp: float = 20,
+    max_cop: float = 7.5,
+    n_households: int = 1,
+    elec_unit_rate: float = 246.4,  # octopus 12M elec unit rate in £/MWh
+    gas_unit_rate: float = 59.3  # octopus 12M gas unit rate in £/MWh
+) -> list[OpexEstimate]:
+    temperature_fp = 'data/temperature_2020_2032.csv'
+    min_scops = [float(scop) for scop in min_scops.split(",")]
+    s_temperature = load_temperature_s(temperature_fp)
+
+    n_years = (s_temperature.index[-1]-s_temperature.index[0]).total_seconds() / (365 * 24 * 3600)
+
+    response_objs = []
+
+    for min_scop in min_scops:
+        df_opex_estimate_ts = get_opex_estimate_ts_df(
+            s_temperature,
+            min_scop,
+            annual_heat_kwh_consumption, 
+            heating_on_temperature,
+            min_temp,
+            max_temp,
+            max_cop,
+            n_households
+        )
+
+        annual_heat_pump_elec_load = df_opex_estimate_ts['elec_load_kwh'].sum()/n_years
+        annual_heat_pump_elec_cost = annual_heat_pump_elec_load * elec_unit_rate / 1e3
+        annual_counterfactual_boiler_gas_load = df_opex_estimate_ts['heating_load_kwh'].multiply(0.8).sum()/n_years
+        annual_counterfactual_boiler_gas_cost = annual_counterfactual_boiler_gas_load * gas_unit_rate / 1e3
+
+        response_objs.append(OpexEstimate(
             annual=[
-                KeyValue(key="heat_pump_elec_cost", value=str(annual_heat_kwh_consumption * scop * 0.15)),
-                KeyValue(key="gas_boiler_counterfactual_cost", value=str(annual_heat_kwh_consumption * scop * 0.25)),
-                KeyValue(key="carbon_kg_reduction", value=str(annual_heat_kwh_consumption * scop * 0.05))
+                KeyValue(key="heat_pump_elec_cost", value=str(round(annual_heat_pump_elec_cost, 2))),
+                KeyValue(key="gas_boiler_counterfactual_cost", value=str(round(annual_counterfactual_boiler_gas_cost, 2))),
+                KeyValue(key="carbon_kg_reduction", value=str(123.45))
             ]
-        ) for scop in scops
-    ]
+        ))
+
+    return response_objs
