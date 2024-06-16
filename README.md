@@ -7,7 +7,21 @@
 * Install poetry - [link](https://python-poetry.org/docs/#installation)
 * Run `poetry install`
 * Ensure you have been sent the `.env` and `heatmap.db` files
+* Ensure you have a directory called `static` under `heatmap/api/`
 * Run `poetry run python main.py`
+
+<br>
+
+### Docker
+
+* `docker build -t heatmap:latest .`
+* `docker run -d -p 8000:8000 --name heatmap heatmap:latest`
+
+#### Deployment
+
+* `gcloud artifacts repositories create heatdash-repo --repository-format=docker --location=europe-west2-a --description="Heatdash"`
+* `gcloud builds submit --region=europe-west2-a --tag europe-west2-a-docker.pkg.dev/heat-geek-hackathons/heatdash-repo/api:latest`
+
 
 <br>
 

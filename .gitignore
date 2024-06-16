@@ -2,3 +2,7 @@ data/heatmap.db
 .env
 __pycache__/
 poetry.lock
+heatmap.tar.gz
+
+frontend/build
+frontend/node_modules
