@@ -17,4 +17,4 @@ if __name__ == '__main__':
         engine, tables=[PowerCarbonIntensity.__table__, PowerPrice.__table__, GasPrice.__table__]
     )
 
-    uvicorn.run("heatmap.api.app:app", host=HOST, port=8000, reload=True)
+    uvicorn.run("heatmap.api.app:app", host=HOST, port=8080, reload=True)
