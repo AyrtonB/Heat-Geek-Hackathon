@@ -1,7 +1,7 @@
 
 
-export const SCOP_INTERVAL = 0.1
-export const MIN_SCOP = 2.8
+export const SCOP_INTERVAL = 0.25
+export const MIN_SCOP = 1.0
 export const MAX_SCOP = 5.0
 
 export const MAX_SCOP_INDEX = Math.floor((MAX_SCOP - MIN_SCOP) / SCOP_INTERVAL)

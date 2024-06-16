@@ -6,7 +6,7 @@ import AnnualSavingsCard from './components/annual-savings';
 const App:React.FC = () => {
   return (
     <Layout>
-      <Space direction='vertical' style={{ padding: 24 }}>
+      <Space direction='vertical' style={{ padding: 0 }}>
         <AddressSearch />
         <AnnualSavingsCard/>
       </Space>
