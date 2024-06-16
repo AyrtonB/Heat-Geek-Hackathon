@@ -14,9 +14,10 @@
 
 
 #### Deployment
-* API: `gcloud run deploy`
-* Frontend: `cd frontend && gcloud run deploy`
-* Streamlit: `cd streamlit && gcloud run deploy`
+
+* API: `gcloud run deploy --quiet https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app/analysis/opex-estimate?scops=2.8,2.9,3,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.` => https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app/docs
+* Frontend: `cd frontend && gcloud run deploy --quiet https://frontend-4zuwmrh3fq-nw.a.run.app/` => https://frontend-4zuwmrh3fq-nw.a.run.app/
+* Streamlit: `cd streamlit && gcloud run deploy --quiet` => https://streamlit-4zuwmrh3fq-nw.a.run.app/
 
 
 <br>

@@ -2,7 +2,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 
-const BASE_URL = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:8000' : 'https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app'
+const BASE_URL = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:8080' : 'https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app'
 
 export interface HeatgeekAddressSearchParams {
     postcode: string
