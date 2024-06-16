@@ -14,10 +14,14 @@ params = {
     "start_date" : "2024-01-15T19:08:28.025Z",
     "end_date" : "2024-01-15T19:08:28.025Z"
 }
+@st.cache_data()
+def load_data():
+    temp_data = pd.read_csv("data/temperature_2020_2032_with_tempdiff.csv")
+    temp_data.rename(columns={'timestamp': 'Time'}, inplace=True)
 
-temp_data = pd.read_csv("data/temperature_2020_2032_with_tempdiff.csv")
+    return temp_data
 
-temp_data.rename(columns={'timestamp': 'Time'}, inplace=True)
+temp_data = load_data()
 
 # power_carbon_intense = requests.get("http://10.13.22.45:8000/timeseries/power-carbon-intensity", params=params)
 
