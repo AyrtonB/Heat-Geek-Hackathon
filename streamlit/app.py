@@ -1,6 +1,6 @@
 #%%
 import streamlit as st
-import requests
+# import requests
 import altair as alt
 import pandas as pd
 

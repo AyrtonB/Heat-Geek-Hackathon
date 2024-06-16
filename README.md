@@ -12,13 +12,12 @@
 
 <br>
 
-### Docker
-
-* `docker build -t heatmap:latest .`
-* `docker run -d -p 8000:8000 --name heatmap heatmap:latest`
 
 #### Deployment
-* `gcloud run deploy`
+* API: `gcloud run deploy`
+* Frontend: `cd frontend && gcloud run deploy`
+* Streamlit: `cd streamlit && gcloud run deploy`
+
 
 <br>
 
