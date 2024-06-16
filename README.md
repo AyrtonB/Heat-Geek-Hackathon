@@ -6,12 +6,11 @@
 
 * Install poetry - [link](https://python-poetry.org/docs/#installation)
 * Run `poetry install`
-* Ensure you have been sent the `.env` and `heatmap.db` files
+* Ensure you have been sent the `.env`, `temperature_2020_2032.csv` and `heatmap.db` files
 * Ensure you have a directory called `static` under `heatmap/api/`
 * Run `poetry run python main.py`
 
 <br>
-
 
 #### Deployment
 

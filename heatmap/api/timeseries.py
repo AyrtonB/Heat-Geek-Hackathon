@@ -24,12 +24,13 @@ def get_power_carbon_intensity(
     start_date: datetime.datetime, end_date: datetime.datetime
 ) -> list[PowerCarbonIntensity]:
     with bound_sessionmaker() as session:
-        return get_records_within_dates(session, start_date, end_date)
+        return get_records_within_dates(session, start_date, end_date, PowerCarbonIntensity)
 
 
 @router.get("/power-price")
 def get_power_price(start_date: datetime.datetime, end_date: datetime.datetime) -> list[PowerPrice]:
-    return [PowerPrice(start_time=datetime.datetime(2024, 1, 1, 12, 30), value=123.45)]
+    with bound_sessionmaker() as session:
+        return get_records_within_dates(session, start_date, end_date, PowerPrice)
 
 
 @router.get("/gas-price")
