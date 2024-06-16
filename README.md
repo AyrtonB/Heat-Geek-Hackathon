@@ -12,15 +12,11 @@
 
 <br>
 
-### Docker
-
-* `docker build -t heatmap:latest .`
-* `docker run -d -p 8080:8080 --name heatmap heatmap:latest`
-
 #### Deployment
 
-* `gcloud artifacts repositories create heatdash-repo --repository-format=docker --location=europe-west2-a --description="Heatdash"`
-* `gcloud builds submit --region=europe-west2-a --tag europe-west2-a-docker.pkg.dev/heat-geek-hackathons/heatdash-repo/api:latest`
+* API: `gcloud run deploy --quiet https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app/analysis/opex-estimate?scops=2.8,2.9,3,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.` => https://heat-geek-hackathon-4zuwmrh3fq-nw.a.run.app/docs
+* Frontend: `cd frontend && gcloud run deploy --quiet https://frontend-4zuwmrh3fq-nw.a.run.app/` => https://frontend-4zuwmrh3fq-nw.a.run.app/
+* Streamlit: `cd streamlit && gcloud run deploy --quiet` => https://streamlit-4zuwmrh3fq-nw.a.run.app/
 
 
 <br>
