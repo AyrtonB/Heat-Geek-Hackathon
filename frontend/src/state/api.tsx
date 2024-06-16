@@ -266,7 +266,7 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: builder => ({
         getPropertyInfo: builder.query<PropertyInfoResult, PropertyInfoSearchParams>({
-            query: ({ postcode, address }) => `property_info/${address}/${postcode}`
+            query: ({ postcode, address }) => `/analysis/heat-geek-address-lookup?address=${address}&postcode=${postcode}`
         }),
         getAnnualSavings: builder.query<AnnualSavingsResponse, AnnualSavingsParameters>({
             query: (p) => `annual_savings/?scop=${p.scop}`
