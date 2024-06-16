@@ -7,7 +7,7 @@ class AnnualCostEstimate(BaseModel):
     annual_carbon_kg_reduction: float
 
 
-3
+
 
 
 class OpexEstimate(BaseModel):
