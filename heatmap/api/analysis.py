@@ -48,10 +48,11 @@ def get_opex_estimate(
 
         annual_heat_pump_elec_load = df_opex_estimate_ts['elec_load_kwh'].sum()/n_years
         annual_heat_pump_elec_cost = annual_heat_pump_elec_load * elec_unit_rate / 1e3
-        annual_counterfactual_boiler_gas_load = df_opex_estimate_ts['heating_load_kwh'].multiply(0.8).sum()/n_years
+        annual_counterfactual_boiler_gas_load = annual_heat_kwh_consumption/0.8
         annual_counterfactual_boiler_gas_cost = annual_counterfactual_boiler_gas_load * gas_unit_rate / 1e3
-
+ 
         response_objs.append(OpexEstimate(
+            min_scops=min_scop,
             annual=[
                 KeyValue(key="heat_pump_elec_cost", value=str(round(annual_heat_pump_elec_cost, 2))),
                 KeyValue(key="gas_boiler_counterfactual_cost", value=str(round(annual_counterfactual_boiler_gas_cost, 2))),

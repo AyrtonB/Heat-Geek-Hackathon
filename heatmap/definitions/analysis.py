@@ -9,4 +9,5 @@ class KeyValue(BaseModel):
 
 
 class OpexEstimate(BaseModel):
+    min_scops: float
     annual: List[KeyValue]
