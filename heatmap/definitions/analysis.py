@@ -1,4 +1,5 @@
-from typing import List
+import datetime
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -8,6 +9,15 @@ class KeyValue(BaseModel):
     value: str
 
 
+class HeatPumpTimeSeriesRecord(BaseModel):
+    timestamp: datetime.datetime
+    temperature: float
+    heating_load_kwh: float
+    cop: float
+    elec_load_kwh: float
+
+
 class OpexEstimate(BaseModel):
     min_scops: float
-    annual: List[KeyValue]
+    annual: list[KeyValue]
+    timeseries: list[HeatPumpTimeSeriesRecord]

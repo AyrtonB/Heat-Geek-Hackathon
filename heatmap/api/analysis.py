@@ -10,7 +10,11 @@ from sqlmodel import create_engine
 
 from heatmap.analysis import get_opex_estimate_ts_df, load_temperature_s
 from heatmap.db import get_records_within_dates
-from heatmap.definitions.analysis import KeyValue, OpexEstimate
+from heatmap.definitions.analysis import (
+    HeatPumpTimeSeriesRecord,
+    KeyValue,
+    OpexEstimate,
+)
 from heatmap.definitions.timeseries import PowerCarbonIntensity
 
 router = APIRouter(tags=["Analysis"])
@@ -83,7 +87,7 @@ def get_opex_estimate(
             df_opex_estimate_ts.loc[common_dt_idx, 'elec_load_kwh']
             .multiply(s_carbon_intensity.loc[common_dt_idx])
             .sum()
-            / 3 # n_year of carbon intensity
+            / 3  # n_year of carbon intensity
         )
         annual_counterfactual_boiler_gas_load = annual_heat_kwh_consumption / gas_boiler_efficiency
         annual_counterfactual_boiler_gas_cost = (annual_counterfactual_boiler_gas_load * gas_unit_rate / 1e3) + (
@@ -101,9 +105,10 @@ def get_opex_estimate(
                     ),
                     KeyValue(
                         key="carbon_kg_reduction",
-                        value=str((annual_counterfactual_boiler_gco2 - annual_heat_pump_gco2) / 1e3),
+                        value=str(round((annual_counterfactual_boiler_gco2 - annual_heat_pump_gco2) / 1e3, 2)),
                     ),
                 ],
+                timeseries=df_opex_estimate_ts.resample('m').mean().reset_index().to_dict(orient='records'),
             )
         )
 
