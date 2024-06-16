@@ -1,9 +1,9 @@
 import datetime
 
+from heatmap.definitions.elexon import MarketIndex
 from heatmap.definitions.ng_carbon_intensity import (
     Response as NgCarbonIntensityResponse,
 )
-from heatmap.definitions.elexon import MarketIndex
 from heatmap.definitions.timeseries import PowerCarbonIntensity, PowerPrice
 
 
@@ -16,10 +16,11 @@ def ng_to_core__power_carbon_intensity(
         if data_record.intensity.actual is not None
     ]
 
+
 def elexon_to_core__power_market_index(
     market_index_records: list[MarketIndex],
 ) -> list[PowerPrice]:
     return [
-        PowerPrice(start_time=mir.startTime, end_time=mir.startTime+datetime.timedelta(minutes=30), value=mir.price)
+        PowerPrice(start_time=mir.startTime, end_time=mir.startTime + datetime.timedelta(minutes=30), value=mir.price)
         for mir in market_index_records
     ]
