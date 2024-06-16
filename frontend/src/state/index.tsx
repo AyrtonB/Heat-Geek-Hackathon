@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { propertySlice } from './property'
-import { propertyInfoApi } from './property-info-api'
+import { heatpumpSlice } from './property'
+import { apiSlice } from './api'
 import { addressSearchSlice } from './address-search'
 import { useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
     addressSearch: addressSearchSlice.reducer,
-    property: propertySlice.reducer,
-    propertyInfoApi: propertyInfoApi.reducer,
+    property: heatpumpSlice.reducer,
+    api: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(propertyInfoApi.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

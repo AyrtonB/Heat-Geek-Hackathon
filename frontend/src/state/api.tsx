@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { createApi } from '@reduxjs/toolkit/query/react'
+import { get } from 'http'
 
 
 const BASE_URL = 'https://hackathonapis-35klfnb33a-ew.a.run.app'
@@ -248,15 +249,29 @@ export type PropertyInfoResult = {
     }
 }
 
+export interface AnnualSavingsParameters {
+  scop: number[]
+  heat_loss_kw?: number;
+  location_design_temp?: number;
+}
+
+type AnnualSavingsResponse = {
+  key: string;
+  value: number;
+}[][]
+
   
-export const propertyInfoApi = createApi({
-    reducerPath: 'propertyInfoApi',
+export const apiSlice = createApi({
+    reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: builder => ({
         getPropertyInfo: builder.query<PropertyInfoResult, PropertyInfoSearchParams>({
             query: ({ postcode, address }) => `property_info/${address}/${postcode}`
+        }),
+        getAnnualSavings: builder.query<AnnualSavingsResponse, AnnualSavingsParameters>({
+            query: (p) => `annual_savings/?scop=${p.scop}`
         })
     })
 })
 
-export const { useLazyGetPropertyInfoQuery } = propertyInfoApi
+export const { useLazyGetPropertyInfoQuery, useGetAnnualSavingsQuery } = apiSlice

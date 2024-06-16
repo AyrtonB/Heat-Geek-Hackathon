@@ -1,25 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PropertyInfoResult } from "./property-info-api";
+import { PropertyInfoResult } from "./api";
 
-type PropertyState = {
-    propertyInfo?: PropertyInfoResult
-    maxFlowTemperature: number
-    
+type HeatPumpState = {
+   scopIndex: number
 }
 
-const initialState:PropertyState = {
-    maxFlowTemperature: 40
-
+const initialState: HeatPumpState = {
+    scopIndex: 0
 }
 
-export const propertySlice = createSlice({
-    name: "property",
+export const heatpumpSlice = createSlice({
+    name: "heatpump",
     reducers: {
         setPropertyInfo: (state, action: PayloadAction<PropertyInfoResult>) => {
             state.propertyInfo = action.payload
         },
-        setMaxFlowTemperature: (state, action: PayloadAction<number>) => {
-            state.maxFlowTemperature = action.payload
+        setScop: (state, action: PayloadAction<number>) => {
+            state.scop = action.payload
         }
     },
     initialState

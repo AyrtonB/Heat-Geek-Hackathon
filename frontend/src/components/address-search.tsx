@@ -6,8 +6,8 @@ import { Button, Card, Input, Space } from "antd";
 import { RootState } from "../state";
 import { useSelector } from "react-redux";
 import { addressSearchSlice } from "../state/address-search";
-import { propertySlice } from "../state/property";
-import { useLazyGetPropertyInfoQuery } from "../state/property-info-api";
+import { heatpumpSlice } from "../state/property";
+import { useLazyGetPropertyInfoQuery } from "../state/api";
 import CurrentProperty from "./current-property";
 
 const PostcodeSearch: React.FC = () => {
@@ -55,7 +55,7 @@ const SearchButton: React.FC = () => {
 
             if (!data) return;
 
-            dispatch(propertySlice.actions.setPropertyInfo(data))
+            dispatch(heatpumpSlice.actions.setPropertyInfo(data))
           } catch (e) {
             console.error(e);
           }
